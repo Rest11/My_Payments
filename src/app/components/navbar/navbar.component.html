@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand" [routerLink]="['/']">Welcome to My Payments</a>
+        </div>
+
+        <button mat-raised-button class="navbar-toggler"
+            type="button" (click)="toggleSidebar()" #navbarToggler>
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <div class="input-group no-border">
+                        <button mat-raised-button class="btn btn-white btn-round btn-just-icon"
+                            [routerLink]="['/',RoutingContract.AdminLayout.USER_PROFILE]">
+                            <img class="user-avatar" [src]="currentAvatarLink | async" />
+                            <span class="ripple-container"></span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

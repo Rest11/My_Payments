@@ -1,0 +1,5 @@
+<div class="top-border" *ngIf="showTopBorder"></div>
+    <div class="transparent-borders" #contents>
+        <ng-content></ng-content>
+    </div>
+<div class="bottom-border" *ngIf="showBottomBorder"></div>

@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+.hide {
+    display: none !important;
+}
+
+.search-results .list-group {
+    background-color: #EAEAEA;
+}
+
+.search-results .list-group-item:hover {
+    color: #ffffff;
+    background-color: #2196f3;
+    border-color: #2196f3;
+}

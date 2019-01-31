@@ -1,0 +1,14 @@
+# folders
+.idea/
+node_modules/
+out-tsc/
+dist/
+
+# pattern files
+src/**/*.js
+src/**/*.js.map
+
+# files
+environment.dev.ts
+environment.prod.ts
+yarn.lock

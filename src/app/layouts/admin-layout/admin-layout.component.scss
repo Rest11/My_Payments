@@ -1,0 +1,5 @@
+.wrapper {
+    &.blurred {
+        filter: blur(3px);
+    }
+}

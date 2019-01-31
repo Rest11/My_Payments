@@ -1,0 +1,35 @@
+@import "constants";
+
+@mixin stretched() {
+    @each $side in top bottom left right {
+        #{$side}: 0;
+    }
+}
+
+@mixin overlay-fixed() {
+    position: fixed;
+    @include stretched();
+}
+
+@mixin overlay-absolute() {
+    position: absolute;
+    @include stretched();
+}
+
+@mixin basic-flex($align-items, $justify-content) {
+    display: flex;
+    justify-content: #{$align-items};
+    align-items: #{$justify-content};
+}
+
+@mixin darken-color-on-hover($color) {
+    color: #{$color};
+    &:hover {
+        color: darken($color, 15%);
+    }
+}
+
+@mixin transition($properties...) {
+    transition-property: $properties;
+    transition-duration: #{$default-transition-duration};
+}

@@ -1,0 +1,21 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">My Payments admin panel</h4>
+                        <p class="card-category">Authorized personnel only</p>
+                    </div>
+
+                    <div class="card-body">
+                        <button class="btn btn-block btn-social btn-google" (click)="signIn(socialNetwork.GOOGLE)">
+                            <span class="fa fa-google-plus"></span> Sign in with Google+
+                        </button>
+                        <button class="btn" (click)="signOut()">Sign out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
