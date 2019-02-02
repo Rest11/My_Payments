@@ -1,6 +1,5 @@
 import { BaseModel } from 'ts-json-mapper';
 
-// TODO: Is this class necessary?
 export class Storage<T extends BaseModel> {
     private static readonly APP_PREFIX = 'app';
 
@@ -27,7 +26,6 @@ export class Storage<T extends BaseModel> {
     }
 
     public clear () : void {
-        // localStorage.removeItem(this.key);
-        localStorage.clear();
+        localStorage.removeItem(this.key);
     }
 }

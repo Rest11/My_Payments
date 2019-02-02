@@ -220,7 +220,6 @@
   //   //margin-bottom: (1.5 * $help-font-size);
   // }
 
-  // TODO: remove this when known stable.  https://github.com/FezVrasta/bootstrap-material-design/issues/849
   //@else {
   //
   //  // for radios and checkboxes without a form-group, add some extra vertical spacing to pad down so that
@@ -286,7 +285,7 @@
     @include bmd-label-static($label-static-top - 0.65, $static-font-size);
   }
   // #559 Fix for webkit/chrome autofill - rule must be separate because it breaks firefox otherwise #731
-  //input:-webkit-autofill ~ .bmd-label-floating {  FIXME: confirm that the autofill js generation of change event makes this unnecessary
+  //input:-webkit-autofill ~ .bmd-label-floating {
   //  @include bmd-label-static($label-top, $static-font-size, $static-line-height);
   //}
 

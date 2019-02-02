@@ -1,5 +1,6 @@
 import { BaseModel, ModelProperty } from 'ts-json-mapper';
 
+// TODO: check is it necessary class?
 export class UserModel extends BaseModel {
     @ModelProperty()
     public id: number;

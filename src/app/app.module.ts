@@ -15,8 +15,6 @@ import { PipesModule } from './pipes/pipes.module';
 import { DirectivesModule } from './directives/directives.module';
 import { ServicesModule } from './services/services.module';
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-import { AuthServiceConfig, SocialLoginModule } from "angularx-social-login";
-import { AppAuthService } from "./services/app-auth.service";
 
 @NgModule({
     imports: [
@@ -30,7 +28,6 @@ import { AppAuthService } from "./services/app-auth.service";
         ServicesModule,
         PipesModule,
         DirectivesModule,
-        SocialLoginModule,
         RouterModule.forRoot(APP_ROUTES),
     ],
     declarations: [
@@ -38,12 +35,6 @@ import { AppAuthService } from "./services/app-auth.service";
         AdminLayoutComponent,
         UnauthorizedLayoutComponent,
         NotFoundComponent,
-    ],
-    providers: [
-        {
-            provide: AuthServiceConfig,
-            useFactory: AppAuthService.provideConfig,
-        },
     ],
     bootstrap: [AppComponent],
 })

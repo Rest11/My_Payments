@@ -6,5 +6,7 @@ export namespace RoutingContract {
     }
 
     export namespace API {
+        export const USER = 'user';
+        export const AUTHENTICATE = 'authenticate';
     }
 }

@@ -1,12 +1,12 @@
 {
-  "name": "cleveroad-re-design-admin",
-  "version": "2.1.0",
-  "license": "MIT",
+  "name": "my-payments",
+  "author": "Max Shynkarenko",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "start": "./node_modules/.bin/ng serve --env=dev",
     "dev:build": "./node_modules/.bin/ng build --env=dev"
   },
-  "private": true,
   "dependencies": {
     "@agm/core": "1.0.0-beta.2",
     "@angular/animations": "^5.2.9",
@@ -22,7 +22,6 @@
     "@angular/platform-server": "5.2.9",
     "@angular/router": "5.2.9",
     "ajv": "6.4.0",
-    "angularx-social-login": "^1.2.6",
     "arrive": "2.4.1",
     "bootstrap": "4.1.1",
     "bootstrap-material-design": "4.1.1",
@@ -56,6 +55,8 @@
     "@angular/compiler-cli": "5.2.9",
     "@angular/language-service": "5.2.9",
     "@types/bootstrap": "3.3.32",
+    "@types/gapi": "0.0.36",
+    "@types/gapi.auth2": "0.0.48",
     "@types/jquery": "1.10.31",
     "@types/lodash": "^4.14.110",
     "@types/mime-types": "^2.1.0",

@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class NotificationsService {
     constructor (
-        private toastr: ToastrService,
+        private readonly toastr: ToastrService,
     ) {
         // note: all of ToastrService methods are wrapped in 'requestAnimationFrame' (could be simple 'setTimeout'
         // actually - the point is to wait a bit to avoid possible 'ExpressionChangedAfterItHasBeenCheckedError' on

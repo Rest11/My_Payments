@@ -22,8 +22,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     private isSidebarVisible: boolean = false;
 
     constructor (
-        private router: Router,
-        private renderer: Renderer2,
+        private readonly router: Router,
+        private readonly renderer: Renderer2,
         private readonly usersService: AppAuthService,
     ) { }
 

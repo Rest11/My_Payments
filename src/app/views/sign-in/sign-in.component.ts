@@ -1,47 +1,63 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { SocialUser } from "angularx-social-login";
+import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
+import { delay } from "rxjs/operators";
 import { AppAuthService } from '../../services/app-auth.service';
-import { ServerError } from '../../types/server-error';
-import { SocialNetwork } from "../../app.constants";
+import { NotificationMessage, SocialNetwork } from "../../app.constants";
+import { UserService } from "../../services/user.service";
+import { UserTokenDto } from "../../types/user-token-dto";
 
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignInComponent {
     public readonly socialNetwork: typeof SocialNetwork = SocialNetwork;
-    // private authSubscription: Subscription;
+    private saveUserSubscription: Subscription;
 
     constructor (
         private readonly appAuthService: AppAuthService,
+        private readonly userService: UserService,
         private readonly router: Router,
+        private readonly toastr: ToastrService,
     ) {}
 
     public async signIn (network: string): Promise<void> {
-        await this.appAuthService.signIn(network);
+        try {
+            await this.appAuthService.signIn(network);
 
-        console.log('~~~~~~~~~~- - this.appAuthService.userSubject.getValue()~~~~~~~~~~\n', this.appAuthService.userSubject.getValue());
-        if (this.appAuthService.userSubject.getValue()) this.router.navigateByUrl('/');
+            const userToken: string | null = this.appAuthService.getUserToken;
+
+            if (!userToken) {
+                this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'getUserToken');
+                return;
+            }
+
+            const userDataDto: UserTokenDto = {
+                userToken,
+            };
+            this.saveUserSubscription = this.userService.saveUserData(userDataDto).pipe(
+                delay(0),
+            ).subscribe(
+                () => {
+                    this.router.navigateByUrl('/');
+                },
+                () => {
+                    this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'saveUserSubscription');
+                },
+                () => {
+                    this.saveUserSubscription.unsubscribe();
+                },
+            );
+        } catch (err) {
+            this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'catch');
+        }
     }
 
     // TODO: Temporary
-    public async signOut (): Promise<void> {
-        await this.appAuthService.signOut();
-    }
-
-    public ngOnInit (): void {
-/*        this.authSubscription = this.appAuthService.checkAuth().subscribe(() => {
-            if (this.appAuthService.userSubject.getValue()) this.router.navigateByUrl('/');
-        });*/
-        // this.router.navigateByUrl('/');
-    }
-
-    public ngOnDestroy (): void {
-        // if (this.authSubscription) this.authSubscription.unsubscribe();
+    public signOut (): any {
+        this.appAuthService.signOut();
     }
 }

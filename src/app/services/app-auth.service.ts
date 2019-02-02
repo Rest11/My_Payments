@@ -1,103 +1,88 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { catchError, map, tap } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
 import { Storage } from '../utils/storage';
-import { AuthService, AuthServiceConfig, GoogleLoginProvider, SocialUser } from "angularx-social-login";
 import { environment } from "../../environments/environment";
-import { SocialNetwork } from "../app.constants";
-import { ServerError } from "../types/server-error";
-import { ToastrService } from "ngx-toastr";
-import { of } from "rxjs/observable/of";
-import { empty } from 'rxjs/observable/empty';
+import { RoutingContract } from "../contracts/routing.contract";
+import { TokenModel } from "../models/token.model";
+import { StorageAliases } from "../app.constants";
+import { CheckingTokenResponse } from "../types/checking-token.response";
 
 @Injectable()
 export class AppAuthService {
-    private readonly USER_STORAGE_ALIAS: string = 'user';
-    private storage: Storage<UserModel>;
-    private readonly socialNetwork: typeof SocialNetwork = SocialNetwork;
+    public auth2: any;
+    private storage: Storage<TokenModel>;
 
-    public readonly userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel>(null);
-
-    public static provideConfig (): AuthServiceConfig {
-        return new AuthServiceConfig([
-            {
-                id: environment.auth.google.providerID,
-                provider: new GoogleLoginProvider(environment.auth.google.clientID),
-            },
-            /*{
-                id: FacebookLoginProvider.PROVIDER_ID,
-                provider: new FacebookLoginProvider("Facebook-App-Id"),
-            },*/
-        ]);
-    }
+    // TODO: get user data from DB
+    public userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel>(null);
 
     constructor (
-        // private readonly http: HttpClient,
-        private readonly authService: AuthService,
-        private readonly toastr: ToastrService,
+        private readonly http: HttpClient,
     ) {
-        this.checkAuth().subscribe();
-    }
+        this.storage = new Storage<TokenModel>(StorageAliases.TOKEN);
 
-    private saveUser (userData: SocialUser): void {
-        const newUser: UserModel = new UserModel({
-            idNetwork: userData.id,
-            email: userData.email,
-            displayName: userData.name,
-            avatar: userData.photoUrl,
-            currentToken: userData.authToken,
+        gapi.load('auth2', () => {
+            gapi.auth2.init({
+                client_id: environment.auth.google.clientID,
+                cookiepolicy: 'single_host_origin',
+                scope: 'profile',
+                fetch_basic_profile: true,
+            }).then((auth2) => {
+                this.auth2 = auth2;
+
+                const token: TokenModel = new TokenModel({
+                    currentToken: this.getUserToken,
+                });
+
+                this.storage.save(token);
+            });
         });
-
-        this.userSubject.next(newUser);
     }
 
-    public async signIn (network: string): Promise<void> {
-        switch (network) {
-            case this.socialNetwork.GOOGLE:
-                console.log('~~~~~~~~~~socialNetwork.GOOGLE- - ~~~~~~~~~~\n',);
-                await this.authService.signIn(environment.auth.google.providerID);
-                break;
-            /*case this.socialNetwork.FACEBOOK:
-                await this.authService.signIn(environment.auth.facebook.providerID);
-                break;*/
-
+    public get getUserToken (): string | null {
+        try {
+            if (this.auth2.isSignedIn.get()) return this.auth2.currentUser.get().getAuthResponse().id_token;
+        } catch (err) {
+            return null;
         }
     }
 
-    private handleSignInFailure (response: HttpErrorResponse): void {
-        const error: ServerError = response.error;
-        this.toastr.error(error.message);
+    public get getUserTokenFromStorage (): TokenModel {
+        return this.storage.restoreAs(TokenModel);
     }
 
-    public checkAuth (): Observable<void | SocialUser> {
-        return this.authService.authState.pipe(
-            catchError(err => {
-                this.handleSignInFailure(err);
-                return empty();
-            }),
-            tap((userData: SocialUser | null) => {
-                console.log('~~~~~~~~~~checkAuth- - userData~~~~~~~~~~\n', userData);
-                if (!userData) return this.userSubject.next(null);
+    // TODO: check param "network"
+    public signIn (network: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.auth2.isSignedIn.get()) resolve();
 
-                this.saveUser(userData);
-                return of(userData);
-            }),
-        );
+            this.auth2.isSignedIn.listen(signedIn => {
+                if (signedIn) {
+                    const token: TokenModel = new TokenModel({
+                        currentToken: this.getUserToken,
+                    });
+
+                    this.storage.save(token);
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+
+            this.auth2.signIn();
+        });
     }
 
-    public async signOut (): Promise<void> {
-        // await this.authService.signOut();
-        this.userSubject.next(null);
-        localStorage.clear();
-        /*return this.http.delete<void>(url)
-            .pipe(
-                tap(() => {
-                    this.storage.clear();
-                    this.userSubject.next(null);
-                }),
-            );*/
+    public signOut (): void {
+        this.auth2.isSignedIn.listen(null);
+        this.auth2.signOut();
+        this.storage.clear();
+        console.log('~~~~~~~~~~- - signOut~~~~~~~~~~\n', this.getUserToken);
+    }
+
+    public checkToken (currentToken: TokenModel): Observable<CheckingTokenResponse> {
+        return this.http.post<CheckingTokenResponse>(`/${RoutingContract.API.AUTHENTICATE}`, currentToken);
     }
 }
