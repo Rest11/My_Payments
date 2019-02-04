@@ -4,9 +4,10 @@ import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
 import { delay } from "rxjs/operators";
 import { AppAuthService } from '../../services/app-auth.service';
-import { NotificationMessage, SocialNetwork } from "../../app.constants";
+import { NotificationMessage } from "../../app.constants";
 import { UserService } from "../../services/user.service";
-import { UserTokenDto } from "../../types/user-token-dto";
+import { TokenModel } from "../../models/token.model";
+import { UserModel } from "../../models/user.model";
 
 @Component({
     selector: 'app-sign-in',
@@ -14,7 +15,6 @@ import { UserTokenDto } from "../../types/user-token-dto";
     styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent {
-    public readonly socialNetwork: typeof SocialNetwork = SocialNetwork;
     private saveUserSubscription: Subscription;
 
     constructor (
@@ -24,40 +24,31 @@ export class SignInComponent {
         private readonly toastr: ToastrService,
     ) {}
 
-    public async signIn (network: string): Promise<void> {
+    public async signIn (): Promise<void> {
         try {
-            await this.appAuthService.signIn(network);
+            const currentToken: TokenModel | null = await this.appAuthService.signIn();
 
-            const userToken: string | null = this.appAuthService.getUserToken;
-
-            if (!userToken) {
-                this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'getUserToken');
+            if (!currentToken) {
+                this.toastr.error(NotificationMessage.NOT_AUTHENTICATED);
                 return;
             }
 
-            const userDataDto: UserTokenDto = {
-                userToken,
-            };
-            this.saveUserSubscription = this.userService.saveUserData(userDataDto).pipe(
+            this.saveUserSubscription = this.userService.getUserData(currentToken).pipe(
                 delay(0),
             ).subscribe(
-                () => {
+                (userData: UserModel) => {
+                    this.appAuthService.saveUserIntoStorage(userData);
                     this.router.navigateByUrl('/');
                 },
                 () => {
-                    this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'saveUserSubscription');
+                    this.toastr.error(NotificationMessage.NOT_AUTHENTICATED);
                 },
                 () => {
                     this.saveUserSubscription.unsubscribe();
                 },
             );
         } catch (err) {
-            this.toastr.error(NotificationMessage.NOT_AUTHENTICATED, 'catch');
+            this.toastr.error(NotificationMessage.NOT_AUTHENTICATED);
         }
-    }
-
-    // TODO: Temporary
-    public signOut (): any {
-        this.appAuthService.signOut();
     }
 }

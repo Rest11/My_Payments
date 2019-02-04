@@ -14,7 +14,7 @@ export class Storage<T extends BaseModel> {
             return localStorage.removeItem(this.key);
         }
 
-        localStorage.setItem(this.key, JSON.stringify(data.toJSON()));
+        localStorage.setItem(this.key, JSON.stringify(data));
     }
 
     public restoreAs (type: { new(options: any): T ; }) : T {

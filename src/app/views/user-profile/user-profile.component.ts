@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { filter, pluck } from 'rxjs/operators';
+import { filter, map, pluck } from 'rxjs/operators';
 import { CommonComponent } from '../../classes/CommonComponent';
 import { AppAuthService } from '../../services/app-auth.service';
-import { UserModel } from '../../models/user.model';
 import { NotificationsService } from '../../services/notifications.service';
 import { RoutingContract } from "../../contracts/routing.contract";
 
@@ -15,7 +14,9 @@ import { RoutingContract } from "../../contracts/routing.contract";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent extends CommonComponent implements OnInit {
-    public currentName: Observable<string>;
+    public name: Observable<string>;
+    public email: Observable<string>;
+    public avatar: Observable<string>;
 
     constructor (
         private readonly appAuthService: AppAuthService,
@@ -26,26 +27,26 @@ export class UserProfileComponent extends CommonComponent implements OnInit {
     }
 
     public ngOnInit () : void {
-        this.currentName = this.appAuthService.userSubject
+        this.name = this.appAuthService.userSubject
             .pipe(
                 filter((user) => !!user),
-                pluck('displayName'),
+                pluck('name'),
             );
-
-        const userSnapshot: UserModel = this.appAuthService.userSubject.value;
-        /*
-        userSnapshot.email
-        userSnapshot.displayName
-         */
+        this.email = this.appAuthService.userSubject
+            .pipe(
+                filter((user) => !!user),
+                pluck('email'),
+            );
+        this.avatar = this.appAuthService.userSubject
+            .pipe(
+                filter((user) => !!user),
+                pluck('avatar'),
+                map((link: string) => link || '/assets/img/user-placeholder.png'),
+            );
     }
 
     public async signOut () : Promise<void> {
         this.router.navigateByUrl(`/${RoutingContract.AdminLayout.SIGN_IN}`);
         this.appAuthService.signOut();
-        /*this.usersService.signOut()
-            .subscribe(() => {
-                // noinspection JSIgnoredPromiseFromCall
-                this.router.navigate(['/']);
-            });*/
     }
 }

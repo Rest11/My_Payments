@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { RoutingContract } from "../contracts/routing.contract";
-import { UserTokenDto } from "../types/user-token-dto";
+import { TokenModel } from "../models/token.model";
+import { UserModel } from "../models/user.model";
 
 @Injectable()
 export class UserService {
@@ -10,7 +11,7 @@ export class UserService {
         private readonly http: HttpClient,
     ) {}
 
-    public saveUserData (userToken: UserTokenDto): Observable<any> { // TODO: any
-        return this.http.post<void>(`/${RoutingContract.API.USER}`, userToken);
+    public getUserData (userToken: TokenModel): Observable<UserModel> {
+        return this.http.post<UserModel>(`/${RoutingContract.API.USER}`, userToken);
     }
 }

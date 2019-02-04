@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEntry } from '../../types/navigation-entry';
 import { RoutingContract } from '../../contracts/routing.contract';
-import { AppAuthService } from "../../services/app-auth.service";
-import { UserModel } from "../../models/user.model";
 
 @Component({
     selector: 'app-sidebar',
@@ -10,7 +8,6 @@ import { UserModel } from "../../models/user.model";
     styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
-    public readonly user: UserModel = this.usersService.userSubject.getValue();
     public menuItems: NavigationEntry[] = [
         {
             path: RoutingContract.AdminLayout.DASHBOARD,
@@ -24,7 +21,5 @@ export class SidebarComponent {
         },
     ];
 
-    constructor (
-        private readonly usersService: AppAuthService,
-    ) { }
+    constructor () { }
 }
