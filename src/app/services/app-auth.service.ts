@@ -18,6 +18,7 @@ export class AppAuthService {
     private tokenStorage: Storage<TokenModel>;
     private userStorage: Storage<UserModel>;
     private userSubscription: Subscription;
+
     public auth2: any;
     public userSubject: BehaviorSubject<UserModel | null> = new BehaviorSubject<UserModel>(null);
 
@@ -101,7 +102,7 @@ export class AppAuthService {
         this.userSubject.next(userData);
     }
 
-    private saveUserDataIntoStorage (currentToken: string): any {
+    private saveUserDataIntoStorage (currentToken: string): void {
         const tokenModel: TokenModel = new TokenModel({
             currentToken,
         });

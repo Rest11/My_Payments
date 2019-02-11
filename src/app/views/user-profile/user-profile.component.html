@@ -8,13 +8,8 @@
                     </div>
 
                     <div class="card-body">
-                        <h4 class="card-title">
-                            {{ name | async }}
-                        </h4>
-
-                        <h4 class="card-title">
-                            {{ email | async }}
-                        </h4>
+                        <h4 class="card-title">{{ name | async }}</h4>
+                        <h4 class="card-title">{{ email | async }}</h4>
 
                         <button class="btn btn-danger btn-round" (click)="signOut()">
                             Sign out

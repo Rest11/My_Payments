@@ -7,6 +7,10 @@ import { UserProfileComponent } from '../../views/user-profile/user-profile.comp
 import { MatButtonModule, MatInputModule, MatRippleModule, MatTooltipModule } from '@angular/material';
 import { DirectivesModule } from "../../directives/directives.module";
 import { DashboardComponent } from "../../views/dashboard/dashboard.component";
+import { TransactionsPageComponent } from "../../views/transactions-page/transactions-page.component";
+import { PaymentsPageComponent } from "../../views/payments-page/payments-page.component";
+import { ComponentsModule } from "../../components/components.module";
+import { DataTableModule } from "../../classes/data-table/data-table.module";
 
 @NgModule({
     imports: [
@@ -19,10 +23,14 @@ import { DashboardComponent } from "../../views/dashboard/dashboard.component";
         MatInputModule,
         MatTooltipModule,
         DirectivesModule,
+        ComponentsModule,
+        DataTableModule,
     ],
     declarations: [
         DashboardComponent,
         UserProfileComponent,
+        TransactionsPageComponent,
+        PaymentsPageComponent,
     ],
 })
 export class AdminLayoutModule {}

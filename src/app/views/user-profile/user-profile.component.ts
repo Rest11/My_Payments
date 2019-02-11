@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { filter, map, pluck } from 'rxjs/operators';
-import { CommonComponent } from '../../classes/CommonComponent';
+import { CommonComponent } from '../../classes/common-component';
 import { AppAuthService } from '../../services/app-auth.service';
-import { NotificationsService } from '../../services/notifications.service';
 import { RoutingContract } from "../../contracts/routing.contract";
 
 @Component({
@@ -20,7 +19,6 @@ export class UserProfileComponent extends CommonComponent implements OnInit {
 
     constructor (
         private readonly appAuthService: AppAuthService,
-        private readonly notifier: NotificationsService,
         private readonly router: Router,
     ) {
         super();

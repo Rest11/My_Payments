@@ -1,8 +1,0 @@
-<div class="checkbox-set">
-    <form [formGroup]="itemsForm" class="items-list">
-        <mat-checkbox *ngFor="let item of items" class="items-list-entry"
-            [formControl]="itemsForm.controls[item[useAsValue]]">
-            {{ item[useAsLabel] }}
-        </mat-checkbox>
-    </form>
-</div>

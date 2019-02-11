@@ -1,0 +1,16 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <data-table
+                    #dataTable
+                    [tableName]="'Transactions'"
+                    [dataGetter]="requestsGetter"
+                    [fieldsList]="fieldsList"
+                    [actionsList]="actionsList"
+                >
+                </data-table>
+            </div>
+        </div>
+    </div>
+</div>

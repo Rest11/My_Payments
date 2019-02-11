@@ -19,6 +19,16 @@ export class SidebarComponent {
             title: 'My profile',
             icon:'person',
         },
+        {
+            path: RoutingContract.AdminLayout.TRANSACTIONS,
+            title: 'My transactions',
+            icon:'list',
+        },
+        {
+            path: RoutingContract.AdminLayout.PAYMENTS,
+            title: 'Payments',
+            icon:'payment',
+        },
     ];
 
     constructor () { }
