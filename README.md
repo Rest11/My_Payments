@@ -1,10 +1,10 @@
 ## My Payments - Frontend
+This is client-side of the project "My Payments".
 
 ##### Deployment order:
 1) Clone this project;
 2) Create files `environment.dev.ts` and `environment.prod.ts` from `src/environments/environment.ts` in the same folder;
-3) Before configuration these files you have to create developer accounts at the `https://console.developers.google.com` and `https://dashboard
-.stripe.com/account/apikeys` for using Google authentication and making payments by Stripe;
+3) Before configuration these files you have to create developer accounts at [Google](https://console.developers.google.com) and [Stripe](https://dashboard.stripe.com/account/apikeys) for using Google authentication and making payments by Stripe;
 4) Configure `environment.dev.ts` like in the sample `src/environments/environment.ts`;
 5) Run `npm install` to install all libraries;
 6) Start project `npm start`.
@@ -15,10 +15,11 @@ Donation project where a user can donate using Stripe service checks his transac
 
 ##### Technology stack:
 1. Angular;
-2. Node.js + NestJS (TypeScript);
-3. MySQL;
-4. Stripe;
-5. Google OAuth.
+2. Google OAuth (client side);
+3. Stripe (client side);
+4. RxJS;
+5. Material.io;
+6. amCharts 4 (graphs library).
 
 ##### Authorization:
 A user can authorize in the application using Google OAuth. When a user
