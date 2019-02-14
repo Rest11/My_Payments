@@ -10,6 +10,7 @@ export namespace RoutingContract {
     export namespace API {
         export const USER = 'user';
         export const AUTHENTICATE = 'authenticate';
+        export const GET_TOKEN = `${RoutingContract.API.AUTHENTICATE}/get-token`;
         export const TRANSACTIONS = 'transactions';
 
         export namespace Payment {

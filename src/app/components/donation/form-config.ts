@@ -6,7 +6,7 @@ export const DONATION_CONTROLS_CONFIG = {
     [FormsContract.Donation.AMOUNT]: [
         1, [
             Validators.required,
-            Validators.max(PaymentConstants.Amount.MAX), // TODO: whole numbers only
+            Validators.max(PaymentConstants.Amount.MAX),
             Validators.min(PaymentConstants.Amount.MIN),
         ],
     ],

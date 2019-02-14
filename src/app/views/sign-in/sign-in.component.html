@@ -9,8 +9,14 @@
                     </div>
 
                     <div class="card-body">
-                        <button class="btn btn-block btn-social btn-google" (click)="signIn()">
-                            <span class="fa fa-google"></span> Sign in with Google
+                        <button class="btn btn-block btn-social btn-google"
+                                [disabled]="isInProgress | async"
+                                (click)="signIn()"
+                        >
+                            <i class="fa fa-google" [class.hide]="isInProgress | async"></i>
+                            <span [class.hide]="isInProgress | async">Sign in with Google</span>
+
+                            <span [class.hide]="!(isInProgress | async)">Please wait...</span>
                         </button>
                     </div>
                 </div>

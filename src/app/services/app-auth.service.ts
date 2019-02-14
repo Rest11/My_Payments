@@ -12,6 +12,7 @@ import { TokenModel } from "../models/token.model";
 import { StorageAliases } from "../app.constants";
 import { CheckingTokenModel } from "../models/checking-token.model";
 import { UserService } from "./user.service";
+import { EncodedTokenResponse } from "./types/encoded-token.response";
 
 @Injectable()
 export class AppAuthService {
@@ -37,15 +38,14 @@ export class AppAuthService {
                 fetch_basic_profile: true,
             }).then((auth2) => {
                 this.auth2 = auth2;
-                const currentToken: string | null = this.getUserToken;
+                const currentToken: TokenModel | null = this.userTokenFromStorage;
 
-                this.saveTokenIntoStorage(currentToken);
                 this.saveUserDataIntoStorage(currentToken);
             });
         });
     }
 
-    public get getUserToken (): string | null {
+    public get userGoogleToken (): string | null {
         try {
             if (this.auth2.isSignedIn.get()) return this.auth2.currentUser.get().getAuthResponse().id_token;
         } catch (err) {
@@ -53,20 +53,43 @@ export class AppAuthService {
         }
     }
 
-    public get getUserTokenFromStorage (): TokenModel {
+    public get userTokenFromStorage (): TokenModel {
         return this.tokenStorage.restoreAs(TokenModel);
     }
 
+    public async getEncodedToken (token: string | null): Promise<TokenModel> {
+        if (!token) return null;
+
+        const googleTokenMode: TokenModel = new TokenModel({ currentToken: token });
+        const encodedToken: EncodedTokenResponse =
+            await this.http.post<TokenModel>(`/${RoutingContract.API.GET_TOKEN}`, googleTokenMode).toPromise();
+
+        return new TokenModel(encodedToken);
+    }
+
+    public checkToken (currentToken: TokenModel): Observable<CheckingTokenModel> {
+        return this.http.post<CheckingTokenModel>(`/${RoutingContract.API.AUTHENTICATE}`, currentToken).pipe(
+            map(res => new CheckingTokenModel(res)),
+        );
+    }
+
+    private saveTokenIntoStorage (token: TokenModel): TokenModel {
+        this.tokenStorage.save(token);
+        return token;
+    }
+
     public signIn (): Promise<TokenModel | null> {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             if (this.auth2.isSignedIn.get()) {
-                const token: TokenModel = this.saveTokenIntoStorage(this.getUserToken);
+                const encodedToken: TokenModel = await this.getEncodedToken(this.userGoogleToken);
+                const token: TokenModel = this.saveTokenIntoStorage(encodedToken);
                 resolve(token);
             }
 
-            this.auth2.isSignedIn.listen(signedIn => {
+            this.auth2.isSignedIn.listen(async (signedIn) => {
                 if (signedIn) {
-                    const token: TokenModel = this.saveTokenIntoStorage(this.getUserToken);
+                    const encodedToken: TokenModel = await this.getEncodedToken(this.userGoogleToken);
+                    const token: TokenModel = this.saveTokenIntoStorage(encodedToken);
                     resolve(token);
                 } else {
                     reject(null);
@@ -84,32 +107,15 @@ export class AppAuthService {
         this.userStorage.clear();
     }
 
-    public checkToken (currentToken: TokenModel): Observable<CheckingTokenModel> {
-        return this.http.post<CheckingTokenModel>(`/${RoutingContract.API.AUTHENTICATE}`, currentToken).pipe(
-            map(res => new CheckingTokenModel(res)),
-        );
-    }
-
-    private saveTokenIntoStorage (token: string): TokenModel {
-        const tokenModel: TokenModel = new TokenModel({
-            currentToken: token,
-        });
-        this.tokenStorage.save(tokenModel);
-
-        return tokenModel;
-    }
-
     public saveUserIntoStorage (userData: UserModel): void {
         this.userStorage.save(userData);
         this.userSubject.next(userData);
     }
 
-    private saveUserDataIntoStorage (currentToken: string): void {
-        const tokenModel: TokenModel = new TokenModel({
-            currentToken,
-        });
+    private saveUserDataIntoStorage (currentToken: TokenModel): void {
+        if (!currentToken) return;
 
-        this.userSubscription = this.userService.getUserData(tokenModel).pipe(
+        this.userSubscription = this.userService.getUserData(currentToken).pipe(
             delay(0),
         ).subscribe((userData: UserModel) => {
             this.userStorage.save(userData);
