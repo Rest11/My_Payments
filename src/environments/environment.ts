@@ -9,7 +9,6 @@ export const environment = {
     restServerURL: 'http://localhost:3000',             // url of the API server side
     apiVersion: 'v1.0',                                 // API version
     auth: {                                             // credentials of authentication
-        privateKey: 'private-jwt-key',                      // private key for encoding auth user token TODO: not used now
         google: {                                       // google credentials of authentication (https://console.developers.google.com)
             clientID: '123456790',                          // client id of the app from the google account for developers
             providerID: '123456790',                        // provider id of the app from the google account for developers

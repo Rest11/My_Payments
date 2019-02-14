@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from "rxjs";
-import { delay } from "rxjs/operators";
+import { delay, map } from "rxjs/operators";
 import { UserModel } from '../models/user.model';
 import { Storage } from '../utils/storage';
 import { environment } from "../../environments/environment";
 import { RoutingContract } from "../contracts/routing.contract";
 import { TokenModel } from "../models/token.model";
 import { StorageAliases } from "../app.constants";
-import { CheckingTokenResponse } from "../types/checking-token.response";
+import { CheckingTokenModel } from "../models/checking-token.model";
 import { UserService } from "./user.service";
 
 @Injectable()
@@ -84,8 +84,10 @@ export class AppAuthService {
         this.userStorage.clear();
     }
 
-    public checkToken (currentToken: TokenModel): Observable<CheckingTokenResponse> {
-        return this.http.post<CheckingTokenResponse>(`/${RoutingContract.API.AUTHENTICATE}`, currentToken);
+    public checkToken (currentToken: TokenModel): Observable<CheckingTokenModel> {
+        return this.http.post<CheckingTokenModel>(`/${RoutingContract.API.AUTHENTICATE}`, currentToken).pipe(
+            map(res => new CheckingTokenModel(res)),
+        );
     }
 
     private saveTokenIntoStorage (token: string): TokenModel {

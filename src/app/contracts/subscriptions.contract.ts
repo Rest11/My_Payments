@@ -7,4 +7,8 @@ export namespace SubscriptionsContract {
     export namespace DataTable {
         export const UPDATE_DATA_PORTION = 'updateDataPortion';
     }
+
+    export namespace GraphData {
+        export const GET_DATA = 'getData';
+    }
 }

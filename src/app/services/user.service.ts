@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { RoutingContract } from "../contracts/routing.contract";
 import { TokenModel } from "../models/token.model";
 import { UserModel } from "../models/user.model";
@@ -12,6 +13,8 @@ export class UserService {
     ) {}
 
     public getUserData (userToken: TokenModel): Observable<UserModel> {
-        return this.http.post<UserModel>(`/${RoutingContract.API.USER}`, userToken);
+        return this.http.post<UserModel>(`/${RoutingContract.API.USER}`, userToken).pipe(
+            map(res => new UserModel(res)),
+        );
     }
 }

@@ -9,6 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoaderComponent } from './loader/loader.component';
 import { TransparentBordersComponent } from './transparent-borders/transparent-borders.component';
 import { DonationComponent } from "./donation/donation.component";
+import { GraphComponent } from "./graph/graph.component";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { DonationComponent } from "./donation/donation.component";
         LoaderComponent,
         TransparentBordersComponent,
         DonationComponent,
+        GraphComponent,
     ],
     exports: [
         FooterComponent,
@@ -32,6 +34,7 @@ import { DonationComponent } from "./donation/donation.component";
         SidebarComponent,
         TransparentBordersComponent,
         DonationComponent,
+        GraphComponent,
     ],
     entryComponents: [
         LoaderComponent,

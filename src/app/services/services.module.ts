@@ -5,6 +5,7 @@ import { LoaderService } from './loader.service';
 import { UserService } from "./user.service";
 import { PaymentService } from "./payment.service";
 import { TransactionService } from "./transaction.service";
+import { DashboardService } from "./dashboard.service";
 
 @NgModule({
     providers: [
@@ -14,6 +15,7 @@ import { TransactionService } from "./transaction.service";
         UserService,
         PaymentService,
         TransactionService,
+        DashboardService,
     ],
 })
 export class ServicesModule { }

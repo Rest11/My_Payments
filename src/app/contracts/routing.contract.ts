@@ -10,8 +10,14 @@ export namespace RoutingContract {
     export namespace API {
         export const USER = 'user';
         export const AUTHENTICATE = 'authenticate';
-        export const PAYMENT = 'payment';
-        export const DONATION = 'donation';
         export const TRANSACTIONS = 'transactions';
+
+        export namespace Payment {
+            export const BASE = 'payment';
+            export const DONATION = 'donation';
+            export const USERS_AMOUNT = 'users-amount';
+            export const PAYMENTS_AMOUNT = 'payments-amount';
+            export const PAYMENTS_SUM = 'payments-sum';
+        }
     }
 }

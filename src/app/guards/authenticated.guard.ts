@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router/src
 import { AppAuthService } from "../services/app-auth.service";
 import { RoutingContract } from "../contracts/routing.contract";
 import { TokenModel } from "../models/token.model";
-import { CheckingTokenResponse } from "../types/checking-token.response";
+import { CheckingTokenModel } from "../models/checking-token.model";
 
 @Injectable()
 export class AuthenticatedGuard implements CanActivate, CanActivateChild {
@@ -27,7 +27,7 @@ export class AuthenticatedGuard implements CanActivate, CanActivateChild {
         }
 
         return this.appAuthService.checkToken(currentToken).pipe(
-            map((data: CheckingTokenResponse) => {
+            map((data: CheckingTokenModel) => {
                 if (!data.isAuthenticated) this.router.navigateByUrl(`/${RoutingContract.AdminLayout.SIGN_IN}`);
 
                 return data.isAuthenticated;
