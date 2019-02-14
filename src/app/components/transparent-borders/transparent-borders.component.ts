@@ -9,7 +9,6 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
  * IMPORTANT:
  *  - parent component should have explicitly set width/height and position:relative;
  *  - there should be exactly one child element.
- * @todo: turn this into a directive maybe?
  */
 @Component({
     selector: 'transparent-borders',

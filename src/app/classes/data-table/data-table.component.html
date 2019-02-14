@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-header card-header-danger">
+        <h4 class="card-title">{{ tableName }}</h4>
+        <p class="card-category">{{ tableDescription }}</p>
+
+        <input *ngIf="searchConfig?.useSearch"
+            ngxTypeahead title="Search"
+            class="search-bar" placeholder="Search..."
+            [taApi]="'http'"
+            [taUrl]="searchConfig?.searchUrl"
+            [taQueryParam]="searchConfig?.searchQueryParam"
+            [taParams]="searchConfig?.additionalParams"
+            [taMapper]="searchConfig?.responseMapper"
+            [taItemTpl]="searchResult"
+            (taSelected)="handleSearchResultSelected($event)"
+        />
+
+        <ng-template #searchResult let-result>
+            <div class="search-result__entry">
+                <ng-container *ngIf="searchConfig?.templateMapper; else noTemplate">
+                    {{ searchConfig.templateMapper(result.result) }}
+                </ng-container>
+                <ng-template #noTemplate>
+                    Template not set!
+                </ng-template>
+            </div>
+        </ng-template>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="text-primary">
+                <tr>
+                    <th *ngFor="let field of fieldsList">
+                        {{ field.columnName || field.entityFieldName }}
+                    </th>
+                    <th *ngIf="!!actionsList?.length"> Actions </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entry of currentDataPortion | async">
+                    <td *ngFor="let field of fieldsList">
+                        <ng-container *ngIf="!field.customTemplateFactory">
+                            {{ entry[field.entityFieldName] }}
+                        </ng-container>
+                        <ng-container *ngIf="!!field.customTemplateFactory">
+                            <!--suppress UnnecessaryLabelJS -->
+                            <ng-container *ngComponentOutlet="entry[META_KEYS.COMPONENT];
+                                ngModuleFactory: entry[META_KEYS.MODULE];">
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td *ngIf="!!actionsList?.length">
+                        <button *ngFor="let action of actionsList"
+                            class="btn btn-white btn-just-icon" mat-raised-button
+                            [matTooltip]="action.title"
+                            (click)="action.handler(entry)">
+                            <i class="material-icons">
+                                {{ action.icon || 'input' }}
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <mat-paginator [length]="totalItemsCount | async"
+        [pageSize]="itemsPerPage | async"
+        [pageSizeOptions]="ITEMS_PER_PAGE_OPTIONS"
+        (page)="handlePaginationUpdate($event)">
+    </mat-paginator>
+</div>

@@ -2,104 +2,20 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Personal settings</h4>
-                        <p class="card-category">Edit your email, display name and position</p>
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <img class="card-avatar__img" [src]="avatar | async" />
                     </div>
+
                     <div class="card-body">
-                        <!--<form [formGroup]="personalSettingsForm">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Email"
-                                            [formControl]="personalSettingsForm.controls[CONTRACT.EMAIL]">
-                                        <mat-error *ngIf="personalSettingsForm.controls[CONTRACT.EMAIL].invalid">
-                                            {{ personalSettingsForm.getErrorText(CONTRACT.EMAIL) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Display name"
-                                            [formControl]="personalSettingsForm.controls[CONTRACT.DISPLAY_NAME]">
-                                        <mat-error *ngIf="personalSettingsForm.controls[CONTRACT.DISPLAY_NAME].invalid">
-                                            {{ personalSettingsForm.getErrorText(CONTRACT.DISPLAY_NAME) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Position"
-                                            [formControl]="personalSettingsForm.controls[CONTRACT.POSITION]">
-                                        <mat-error *ngIf="personalSettingsForm.controls[CONTRACT.POSITION].invalid">
-                                            {{ personalSettingsForm.getErrorText(CONTRACT.POSITION) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <button mat-raised-button class="btn btn-danger pull-right"
-                                (click)="updatePersonalSettings()">
-                                Update personal settings
-                            </button>
-                            <div class="clearfix"></div>
-                        </form>-->
+                        <h4 class="card-title">{{ name | async }}</h4>
+                        <h4 class="card-title">{{ email | async }}</h4>
+
+                        <button class="btn btn-danger btn-round" (click)="signOut()">
+                            Sign out
+                        </button>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Password</h4>
-                        <p class="card-category">Change your password</p>
-                    </div>
-                    <div class="card-body">
-                        <!--<form [formGroup]="updatePasswordForm">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Old password" type="password"
-                                            [formControl]="updatePasswordForm.controls[CONTRACT.OLD_PASSWORD]">
-                                        <mat-error *ngIf="updatePasswordForm.controls[CONTRACT.OLD_PASSWORD].invalid">
-                                            {{ updatePasswordForm.getErrorText(CONTRACT.OLD_PASSWORD) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="New password" type="password"
-                                            [formControl]="updatePasswordForm.controls[CONTRACT.NEW_PASSWORD]">
-                                        <mat-error *ngIf="updatePasswordForm.controls[CONTRACT.NEW_PASSWORD].invalid">
-                                            {{ updatePasswordForm.getErrorText(CONTRACT.NEW_PASSWORD) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Confirm new password" type="password"
-                                            [formControl]="updatePasswordForm.controls[CONTRACT.CONFIRM_NEW_PASSWORD]">
-                                        <mat-error *ngIf="updatePasswordForm.controls[CONTRACT.CONFIRM_NEW_PASSWORD].invalid">
-                                            {{ updatePasswordForm.getErrorText(CONTRACT.CONFIRM_NEW_PASSWORD) }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12 mat-error" *ngIf="!!updatePasswordForm.errors">
-                                    {{ updatePasswordForm.getErrorText(CONTRACT.FORM_ITSELF) }}
-                                </div>
-                            </div>
-                            <button mat-raised-button class="btn btn-danger pull-right"
-                                (click)="updatePassword()">
-                                Update password
-                            </button>
-                            <div class="clearfix"></div>
-                        </form>-->
-                    </div>
-                </div>
-
-                <button class="btn btn-danger btn-round"
-                        (click)="signOut()"
-                >
-                    Sign out
-                </button>
             </div>
         </div>
     </div>

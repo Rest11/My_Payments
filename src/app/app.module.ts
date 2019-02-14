@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxStripeModule } from "ngx-stripe";
 import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -15,8 +16,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { DirectivesModule } from './directives/directives.module';
 import { ServicesModule } from './services/services.module';
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-import { AuthServiceConfig, SocialLoginModule } from "angularx-social-login";
-import { AppAuthService } from "./services/app-auth.service";
+import { environment } from "../environments/environment";
 
 @NgModule({
     imports: [
@@ -30,20 +30,14 @@ import { AppAuthService } from "./services/app-auth.service";
         ServicesModule,
         PipesModule,
         DirectivesModule,
-        SocialLoginModule,
         RouterModule.forRoot(APP_ROUTES),
+        NgxStripeModule.forRoot(environment.paymentCredentials.stripe.publishKey),
     ],
     declarations: [
         AppComponent,
         AdminLayoutComponent,
         UnauthorizedLayoutComponent,
         NotFoundComponent,
-    ],
-    providers: [
-        {
-            provide: AuthServiceConfig,
-            useFactory: AppAuthService.provideConfig,
-        },
     ],
     bootstrap: [AppComponent],
 })

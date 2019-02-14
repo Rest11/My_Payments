@@ -11,9 +11,9 @@ export class InjectionService {
     private container: ComponentRef<any>;
 
     constructor (
-        private applicationRef: ApplicationRef,
-        private resolver: ComponentFactoryResolver,
-        private injector: Injector,
+        private readonly applicationRef: ApplicationRef,
+        private readonly resolver: ComponentFactoryResolver,
+        private readonly injector: Injector,
     ) { }
 
     /**

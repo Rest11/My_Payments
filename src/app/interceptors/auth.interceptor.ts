@@ -1,23 +1,23 @@
 import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AppAuthService } from '../services/app-auth.service';
-import { Injectable } from '@angular/core';
-import { UserModel } from '../models/user.model';
 import { Headers } from '../enums/headers.enum';
+import { TokenModel } from "../models/token.model";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     constructor (
-        private usersService: AppAuthService,
+        private readonly appAuthService: AppAuthService,
     ) { }
 
     public intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const user: UserModel = this.usersService.userSubject.getValue();
+        const userToken: TokenModel | null = this.appAuthService.userTokenFromStorage;
 
-        if (!user) return next.handle(request);
+        if (!userToken) return next.handle(request);
 
-        const authHeaderValue: string = `Bearer ${user.currentToken}`;
-        const headers: HttpHeaders = request.headers.append(Headers.AUTHORIZATION, authHeaderValue);
+        const token: string = userToken.currentToken;
+        const headers: HttpHeaders = request.headers.append(Headers.AUTHORIZATION, token);
         const updateOptions = { headers };
 
         return next.handle(request.clone(updateOptions));

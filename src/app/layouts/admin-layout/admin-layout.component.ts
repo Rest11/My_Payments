@@ -23,8 +23,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     private readonly BLURRED_CLASS: string = 'blurred';
 
     constructor (
-        public location: Location,
-        private router: Router,
+        public readonly location: Location,
+        private readonly router: Router,
         private readonly loaderService: LoaderService,
         private readonly renderer: Renderer2,
     ) { }
