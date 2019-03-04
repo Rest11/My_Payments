@@ -17,6 +17,10 @@ export const environment = {
             appID: '366088767547643',                       // application ID from the facebook account for developers
             versionAPI: 'v3.2',                             // facebook API version
         },
+        facebook: {                                     // facebook credentials of authentication (https://developers.facebook.com)
+            appID: '123456790',                             // application id from the facebook account for developers
+            versionAPI: 'v3.2',                             // facebook API version that using in the app
+        },
     },
     paymentCredentials: {                               // credentials of payment services
         stripe: {                                       // stripe credentials (https://dashboard.stripe.com/account/apikeys)

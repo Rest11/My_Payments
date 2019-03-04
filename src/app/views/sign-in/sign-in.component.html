@@ -10,13 +10,19 @@
 
                     <div class="card-body">
                         <button class="btn btn-block btn-social btn-google"
-                                [disabled]="isInProgress | async"
-                                (click)="signIn()"
+                                (click)="signIn(AuthPlatform.GOOGLE)"
                         >
-                            <i class="fa fa-google" [class.hide]="isInProgress | async"></i>
-                            <span [class.hide]="isInProgress | async">Sign in with Google</span>
+                            <i class="fa fa-google"></i>
+                            <span>Sign in with Google</span>
+                        </button>
+                    </div>
 
-                            <span [class.hide]="!(isInProgress | async)">Please wait...</span>
+                    <div class="card-body">
+                        <button class="btn btn-block btn-social btn-facebook"
+                                (click)="signIn(AuthPlatform.FACEBOOK)"
+                        >
+                            <i class="fa fa-facebook"></i>
+                            <span>Sign in with Facebook</span>
                         </button>
                     </div>
                 </div>
