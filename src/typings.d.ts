@@ -5,3 +5,4 @@ interface NodeModule {
 }
 
 declare const gapi;
+declare const FB: fb.FacebookStatic;

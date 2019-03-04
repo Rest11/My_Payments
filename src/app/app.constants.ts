@@ -5,6 +5,7 @@ export namespace NotificationMessage {
 export namespace StorageAliases {
     export const TOKEN = 'token';
     export const USER = 'user';
+    export const AUTH_PLATFORM = 'auth-platform';
 }
 
 export namespace PaymentConstants {
@@ -14,6 +15,17 @@ export namespace PaymentConstants {
         export const MAX = 15;
     }
 
+}
+export namespace AuthPlatform {
+    export const GOOGLE = 'google';
+    export const FACEBOOK = 'facebook';
+}
+
+export namespace FacebookLoginStatus {
+    export const AUTHORIZATION_EXPIRED = 'authorization_expired';
+    export const CONNECTED = 'connected';
+    export const NOT_AUTHORIZED = 'not_authorized';
+    export const UNKNOWN = 'unknown';
 }
 
 export namespace Card {
