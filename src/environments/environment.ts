@@ -13,6 +13,10 @@ export const environment = {
             clientID: '123456790',                          // client id of the app from the google account for developers
             providerID: '123456790',                        // provider id of the app from the google account for developers
         },
+        facebook: {                                     // facebook credentials of authentication (https://developers.facebook.com)
+            appID: '123456790',                             // application id from the facebook account for developers
+            versionAPI: 'v3.2',                             // facebook API version that using in the app
+        },
     },
     paymentCredentials: {                               // credentials of payment services
         stripe: {                                       // stripe credentials (https://dashboard.stripe.com/account/apikeys)

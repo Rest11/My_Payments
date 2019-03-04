@@ -44,7 +44,7 @@ export class UserProfileComponent extends CommonComponent implements OnInit {
     }
 
     public async signOut () : Promise<void> {
-        this.router.navigateByUrl(`/${RoutingContract.AdminLayout.SIGN_IN}`);
         this.appAuthService.signOut();
+        this.router.navigateByUrl(`/${RoutingContract.AdminLayout.SIGN_IN}`);
     }
 }
