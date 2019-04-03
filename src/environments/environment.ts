@@ -13,10 +13,6 @@ export const environment = {
             clientID: '123456790',                          // client ID of the app from the google account for developers
             providerID: '123456790',                        // provider DI of the app from the google account for developers
         },
-        facebook: {                                     // facebook credentials of authentication (https://developers.facebook.com/apps)
-            appID: '366088767547643',                       // application ID from the facebook account for developers
-            versionAPI: 'v3.2',                             // facebook API version
-        },
         facebook: {                                     // facebook credentials of authentication (https://developers.facebook.com)
             appID: '123456790',                             // application id from the facebook account for developers
             versionAPI: 'v3.2',                             // facebook API version that using in the app
