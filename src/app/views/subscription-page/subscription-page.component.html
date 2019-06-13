@@ -1,0 +1,76 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <form novalidate (ngSubmit)="submitSubscription()" [formGroup]="subscriptionForm">
+                    <h3 *ngIf="!(currentSubscription | async)">Choose your subscription plan:</h3>
+
+                    <div class="current-subscription" *ngIf="!!(currentSubscription | async)">
+                        <h3>You have already had the subscription plan</h3>
+                        <h4>Status:
+                            <span class="attention"
+                                  [class.active]="(currentSubscription | async).status === paymentSubscriptionStatus.ACTIVE"
+                            >
+                                {{ (currentSubscription | async).status }}
+                            </span>
+                        </h4>
+                        <h4 class="subscription-text">{{ currentSubscriptionText | async }}</h4>
+                    </div>
+
+                    <br/>
+
+                    <mat-radio-group
+                        aria-label="Subscription plans"
+                        [formControl]="subscriptionForm.controls[FormsContract.Subscription.PLAN]"
+                    >
+                        <mat-radio-button
+                            class="radio-button-subscription"
+                            *ngFor="let subscription of subscriptionPlans | async"
+                            value="{{ subscription.id }}"
+                        >
+                            {{ subscription?.name }} - ${{ subscription?.price }} (per {{ subscription?.interval }})
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                    <br/>
+
+                    <div class="row" [hidden]="!!(currentSubscription | async)">
+                        <div class="col-md-8">
+                            <stripe-card #stripeCard
+                                 [paymentErrorMessage]="cardErrorMessage"
+                                 (hasError)="cardError($event)"
+                            ></stripe-card>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div *ngIf="!(currentSubscription | async)" class="row">
+                        <div class="col-md-8">
+                            <button
+                                mat-button
+                                class="btn btn-primary btn-block"
+                                [disabled]="(hasError | async) || (isInProcessing | async)"
+                            >
+                                <span *ngIf="!(isInProcessing | async)">Submit Subscription</span>
+                                <span *ngIf="isInProcessing | async">Please wait...</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="!!(currentSubscription | async)" class="row">
+                    <div class="col-md-8">
+                        <button
+                            mat-button
+                            class="btn btn-primary btn-block"
+                            (click)="cancelSubscription()"
+                        >
+                            <span>Cancel current subscription</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

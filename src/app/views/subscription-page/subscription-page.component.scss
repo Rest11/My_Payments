@@ -1,0 +1,24 @@
+.radio-button-subscription {
+    display: block;
+}
+
+.btn {
+    .amount {
+        font-size: 13px;
+    }
+}
+
+.current-subscription {
+    .attention {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #d50000;
+
+        &.active {
+            color: #32CD32;
+        }
+    }
+    .subscription-text {
+        font-weight: bold;
+    }
+}

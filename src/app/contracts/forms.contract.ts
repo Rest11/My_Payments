@@ -6,4 +6,8 @@ export namespace FormsContract {
         public static readonly AMOUNT = 'amount';
         public static readonly DESCRIPTION = 'description';
     }
+
+    export abstract class Subscription extends Base {
+        public static readonly PLAN = 'plan';
+    }
 }
