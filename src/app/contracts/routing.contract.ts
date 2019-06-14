@@ -1,3 +1,13 @@
+/*
+NOTE #1:
+```
+    resolve: {
+        [SOME_CONSTANT]: SomeResolver, // <-- you can't do this
+    },
+```
+Look this issue(https://github.com/angular/angular-cli/issues/4686) for details
+*/
+
 export namespace RoutingContract {
     export namespace AdminLayout {
         export const DASHBOARD = 'dashboard';
