@@ -4,6 +4,6 @@ export class UsersAmountGraphDataModel extends BaseModel {
     @ModelProperty()
     public date: Date;
 
-    @ModelProperty('usersCount')
+    @ModelProperty('usersAmount')
     public value: number;
 }

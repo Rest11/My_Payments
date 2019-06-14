@@ -1,29 +1,42 @@
-import { Component } from '@angular/core';
-import { Observable } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { RoutingContract } from "../../contracts/routing.contract";
 import { DashboardService } from "../../services/dashboard.service";
-import { UsersAmountGraphDataModel } from "../../models/users-amount-graph-data.model";
-import { PaymentsAmountGraphDataModel } from "../../models/payments-amount-graph-data.model";
-import { PaymentsSumGraphDataModel } from "../../models/payments-sum-graph-data.model";
+import { PaymentsGraphData } from "../../services/types/payments-graph-data";
+import { GraphData } from "../../services/types/graph-data";
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
-    public userGraphId: string = 'userGraphId';
-    public userTableName: string = 'Amount of users';
-    public userRequestsGetter: Observable<UsersAmountGraphDataModel[]> = this.dashboardService.getUsers.bind(this.dashboardService);
-
-    public paymentsAmountGraphId: string = 'paymentsAmountGraphId';
-    public paymentsAmountTableName: string = 'Amount of payments';
-    public paymentsAmountRequestsGetter: Observable<PaymentsAmountGraphDataModel[]> = this.dashboardService.getPaymentsAmount.bind(this.dashboardService);
-
-    public paymentsSumGraphId: string = 'paymentsSumGraphId';
-    public paymentsSumTableName: string = 'Sum of payments';
-    public paymentsSumRequestsGetter: Observable<PaymentsSumGraphDataModel[]> = this.dashboardService.getPaymentsSum.bind(this.dashboardService);
+export class DashboardComponent implements OnInit {
+    public graphData: GraphData[] = [];
 
     constructor (
         private readonly dashboardService: DashboardService,
+        private readonly activatedRoute: ActivatedRoute,
     ) {}
+
+    public ngOnInit (): void {
+        const paymentsStatistic: PaymentsGraphData = this.activatedRoute.snapshot.data[RoutingContract.Resolvers.PAYMENTS_STATISTIC];
+
+        this.graphData = [
+            {
+                graphId: 'paymentsSumGraphId',
+                tableName: 'Sum of payments',
+                data: paymentsStatistic.sum,
+            },
+            {
+                graphId: 'paymentsAmountGraphId',
+                tableName: 'Amount of payments',
+                data: paymentsStatistic.amount,
+            },
+            {
+                graphId: 'userGraphId',
+                tableName: 'Amount of users',
+                data: paymentsStatistic.usersAmount,
+            },
+        ];
+    }
 }

@@ -12,6 +12,7 @@ import { PaymentsPageComponent } from "../../views/payments-page/payments-page.c
 import { ComponentsModule } from "../../components/components.module";
 import { DataTableModule } from "../../classes/data-table/data-table.module";
 import { SubscriptionPageComponent } from "../../views/subscription-page/subscription-page.component";
+import { PaymentsStatisticResolver } from '../../views/dashboard/resolvers/payments-statistic.resolver';
 
 @NgModule({
     imports: [
@@ -34,6 +35,9 @@ import { SubscriptionPageComponent } from "../../views/subscription-page/subscri
         TransactionsPageComponent,
         PaymentsPageComponent,
         SubscriptionPageComponent,
+    ],
+    providers: [
+        PaymentsStatisticResolver,
     ],
 })
 export class AdminLayoutModule {}

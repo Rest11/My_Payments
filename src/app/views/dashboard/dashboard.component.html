@@ -1,31 +1,11 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
+      <div class="row" *ngFor="let data of graphData">
           <div class="col-md-12">
               <graph
-                  [graphId]="paymentsSumGraphId"
-                  [tableName]="paymentsSumTableName"
-                  [dataGetter]="paymentsSumRequestsGetter"
-              ></graph>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="col-md-12">
-              <graph
-                  [graphId]="paymentsAmountGraphId"
-                  [tableName]="paymentsAmountTableName"
-                  [dataGetter]="paymentsAmountRequestsGetter"
-              ></graph>
-          </div>
-      </div>
-
-      <div class="row">
-          <div class="col-md-12">
-              <graph
-                  [graphId]="userGraphId"
-                  [tableName]="userTableName"
-                  [dataGetter]="userRequestsGetter"
+                  [graphId]="data?.graphId"
+                  [tableName]="data?.tableName"
+                  [data]="data?.data"
               ></graph>
           </div>
       </div>
