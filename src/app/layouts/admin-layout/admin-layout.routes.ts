@@ -12,7 +12,7 @@ export const ADMIN_LAYOUT_ROUTES: Routes = [
         path: RoutingContract.AdminLayout.DASHBOARD,
         component: DashboardComponent,
         resolve: {
-            [RoutingContract.Resolvers.PAYMENTS_STATISTIC]: PaymentsStatisticResolver,
+            paymentsStatistic: PaymentsStatisticResolver,
         },
     },
     {
