@@ -10,7 +10,7 @@ import { AuthPlatformModel } from "../models/auth-platform.model";
 export class AuthInterceptor implements HttpInterceptor {
     constructor (
         private readonly appAuthService: AppAuthService,
-    ) { }
+    ) {}
 
     public intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const userToken: TokenModel | null = this.appAuthService.userTokenFromStorage;

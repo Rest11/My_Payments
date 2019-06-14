@@ -10,9 +10,7 @@ export class Storage<T extends BaseModel> {
     }
 
     public save (data: BaseModel) : void {
-        if (!data) {
-            return localStorage.removeItem(this.key);
-        }
+        if (!data) return localStorage.removeItem(this.key);
 
         localStorage.setItem(this.key, JSON.stringify(data));
     }
@@ -20,12 +18,12 @@ export class Storage<T extends BaseModel> {
     public restoreAs (type: { new(options: any): T ; }) : T {
         const data: string = localStorage.getItem(this.key);
 
-        if (!data) { return null; }
+        if (!data) return null;
 
         return new type(JSON.parse(data));
     }
 
-    public clear () : void {
+    public clear (): void {
         localStorage.removeItem(this.key);
     }
 }

@@ -12,7 +12,7 @@ making payments by Stripe;
 
 ## Project details
 #### About project
-Donation project where a user can donate using Stripe service checks his transactions list and see different statistics of all payments within the application.
+Donation project where a user can donate using Stripe service checks his transactions list and see different statistics of all payments within the application. Also, a user can create a subscription selected one of the choosing options presented.
 
 #### Technology stack:
 1. Angular;
@@ -24,11 +24,13 @@ Donation project where a user can donate using Stripe service checks his transac
 7. amCharts 4 (graphs library).
 
 #### Authorization:
-A user can authorize in the application using Google OAuth or Facebook OAuth. When a user
-authorized he has an option to switch dashboard to view his own spends within the application.
+A user can authorize in the application using Google OAuth or Facebook OAuth. When a user authorized he has an option to switch dashboard to view spends within the application.
 
 #### Donation:
 A user is able to donate the sum of money from $1 to $15 using Stripe.
+
+#### Subscription:
+A user is able to create a subscription selected one of the choosing one of the options presented. A user can have only one subscription at the same time.
 
 #### Dashboard:
 When a user opens the application, he can see a dashboard with three charts where he can see statistic of all payments within the application:

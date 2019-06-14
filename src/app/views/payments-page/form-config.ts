@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { FormsContract } from "../../contracts/forms.contract";
 import { PaymentConstants } from "../../app.constants";
 
-export const DONATION_CONTROLS_CONFIG = {
+export const PAYMENT_CONTROLS_CONFIG = {
     [FormsContract.Donation.AMOUNT]: [
         1, [
             Validators.required,

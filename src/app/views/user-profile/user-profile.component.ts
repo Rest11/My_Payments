@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { filter, map, pluck } from 'rxjs/operators';
-import { CommonComponent } from '../../classes/common-component';
 import { AppAuthService } from '../../services/app-auth.service';
 import { RoutingContract } from "../../contracts/routing.contract";
 
@@ -12,7 +11,7 @@ import { RoutingContract } from "../../contracts/routing.contract";
     styleUrls: ['./user-profile.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserProfileComponent extends CommonComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
     public name: Observable<string>;
     public email: Observable<string>;
     public avatar: Observable<string>;
@@ -20,9 +19,7 @@ export class UserProfileComponent extends CommonComponent implements OnInit {
     constructor (
         private readonly appAuthService: AppAuthService,
         private readonly router: Router,
-    ) {
-        super();
-    }
+    ) {}
 
     public ngOnInit () : void {
         this.name = this.appAuthService.userSubject
