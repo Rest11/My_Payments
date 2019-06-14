@@ -8,8 +8,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoaderComponent } from './loader/loader.component';
 import { TransparentBordersComponent } from './transparent-borders/transparent-borders.component';
-import { DonationComponent } from "./donation/donation.component";
 import { GraphComponent } from "./graph/graph.component";
+import { StripeCardComponent } from './stripe-card/stripe-card.component';
 
 @NgModule({
     imports: [
@@ -25,16 +25,16 @@ import { GraphComponent } from "./graph/graph.component";
         SidebarComponent,
         LoaderComponent,
         TransparentBordersComponent,
-        DonationComponent,
         GraphComponent,
+        StripeCardComponent,
     ],
     exports: [
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
         TransparentBordersComponent,
-        DonationComponent,
         GraphComponent,
+        StripeCardComponent,
     ],
     entryComponents: [
         LoaderComponent,

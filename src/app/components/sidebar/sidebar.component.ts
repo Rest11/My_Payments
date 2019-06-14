@@ -11,23 +11,28 @@ export class SidebarComponent {
     public menuItems: NavigationEntry[] = [
         {
             path: RoutingContract.AdminLayout.DASHBOARD,
-            title: 'Dashboard',
+            title: 'dashboard',
             icon: 'dashboard',
         },
         {
             path: RoutingContract.AdminLayout.USER_PROFILE,
-            title: 'My profile',
+            title: 'my profile',
             icon:'person',
         },
         {
             path: RoutingContract.AdminLayout.TRANSACTIONS,
-            title: 'My transactions',
+            title: 'my transactions',
             icon:'list',
         },
         {
             path: RoutingContract.AdminLayout.PAYMENTS,
-            title: 'Payments',
+            title: 'payment',
             icon:'payment',
+        },
+        {
+            path: RoutingContract.AdminLayout.SUBSCRIPTION,
+            title: 'subscription',
+            icon:'restore',
         },
     ];
 

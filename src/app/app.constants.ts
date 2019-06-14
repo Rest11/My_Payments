@@ -29,23 +29,32 @@ export namespace FacebookLoginStatus {
 }
 
 export namespace Card {
-    export const ID_CARD_ELEMENT = 'card-element';
-    export const STYLES = {
-        base: {
-            color: '#32325d',
-            lineHeight: '18px',
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '18px',
-            '::placeholder': {
-                color: '#aab7c4',
+    export namespace Stripe {
+        export const ID_CARD_ELEMENT = 'stripe-card-element';
+        export const STYLES = {
+            base: {
+                color: '#32325d',
+                lineHeight: '18px',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '18px',
+                '::placeholder': {
+                    color: '#aab7c4',
+                },
             },
-        },
-        invalid: {
-            color: '#fa2a21',
-            iconColor: '#fa755a',
-        },
-    };
+            invalid: {
+                color: '#fa2a21',
+                iconColor: '#fa755a',
+            },
+        };
+    }
 }
 
 export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
+
+export namespace PaymentSubscriptionStatus {
+    export const ACTIVE = 'active';
+    export const PAST_DUE = 'past_due';
+    export const CANCELED = 'canceled';
+    export const UNPAID = 'unpaid';
+}

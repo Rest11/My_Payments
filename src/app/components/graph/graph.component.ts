@@ -1,23 +1,21 @@
-import { Component, Input, NgZone, OnDestroy, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Input, NgZone, OnDestroy, OnInit } from "@angular/core";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 // tslint:disable-next-line:import-name
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import { Observable } from "rxjs/Observable";
 import { CommonComponent } from "../../classes/common-component";
-import { SubscriptionsContract } from "../../contracts/subscriptions.contract";
 
 @Component({
     selector: 'graph',
     templateUrl: './graph.component.html',
     styleUrls: ['./graph.component.scss'],
 })
-export class GraphComponent<DataType> extends CommonComponent implements OnInit, OnDestroy {
+export class GraphComponent<DataType> extends CommonComponent implements AfterViewInit, OnDestroy {
     @Input()
     public graphId: string;
 
     @Input()
-    public dataGetter: () => Observable<DataType>;
+    public data: DataType;
 
     @Input()
     public tableName: string;
@@ -36,22 +34,12 @@ export class GraphComponent<DataType> extends CommonComponent implements OnInit,
     }
 
     private getData (): void {
-        if (!this.dataGetter) {
-            const message: string = 'Data getter is not set!';
-            throw new Error(message);
-        }
+        if (!this.data) throw new Error('Data getter is not set!');
 
-        this.updateSubscription(
-            SubscriptionsContract.GraphData.GET_DATA,
-            this.dataGetter().subscribe(
-                (data: DataType) => {
-                    this.createGraph(data);
-                },
-            ),
-        );
+        this.createGraph(this.data);
     }
 
-    public ngOnInit (): void {
+    public ngAfterViewInit (): void {
         this.getData();
     }
 

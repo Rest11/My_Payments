@@ -45,7 +45,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
             this.lastPoppedUrl = ev.url;
         });
 
-        this.router.events.subscribe((event:any) => {
+        this.router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 if (event.url !== this.lastPoppedUrl) {
                     this.yScrollStack.push(window.scrollY);
