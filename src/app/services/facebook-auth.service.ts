@@ -1,3 +1,15 @@
+/*
+    NOTE:
+    Facebook SDK does not have a refresh token. A common access token is valid for about 2 hours.
+    This is short-life token and you can not refresh it.
+    It will be refreshed automatically if a user will use Facebook API.
+    On the server-side we can generate long-life token that will be available for 60 days.
+    It will be refreshed every day if a user will use Facebook API.
+
+    But this application does not use Facebook API except signIn/signOut so access token never will be refreshed.
+    So we have to use only a short-life token that will be expired in 2 hours.
+ */
+
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { FacebookLoginStatus } from "../app.constants";
