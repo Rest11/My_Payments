@@ -11,7 +11,9 @@
     "start": "./node_modules/.bin/ng serve --env=dev",
     "start-remote": "node server.js",
     "dev:build": "./node_modules/.bin/ng build --env=dev",
-    "build": "./node_modules/.bin/ng build --env=prod"
+    "build": "./node_modules/.bin/ng build --env=prod",
+    "logs-remote": "heroku logs --tail",
+    "deploy": "bash ./git-push-heroku.sh && npm run logs-remote"
   },
   "dependencies": {
     "@agm/core": "1.0.0-beta.2",
