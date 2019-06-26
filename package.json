@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "./node_modules/.bin/ng serve --env=dev",
+    "start-remote": "node server.js",
     "dev:build": "./node_modules/.bin/ng build --env=dev",
     "build": "./node_modules/.bin/ng build --env=prod"
   },
