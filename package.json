@@ -24,6 +24,8 @@
     "@angular/common": "5.2.9",
     "@angular/compiler": "5.2.9",
     "@angular/core": "5.2.9",
+    "@angular/cli": "1.7.4",
+    "@angular/compiler-cli": "5.2.9",
     "@angular/forms": "5.2.9",
     "@angular/http": "5.2.9",
     "@angular/material": "5.2.4",
@@ -61,8 +63,6 @@
     "zone.js": "0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.7.4",
-    "@angular/compiler-cli": "5.2.9",
     "@angular/language-service": "5.2.9",
     "@types/bootstrap": "3.3.32",
     "@types/facebook-js-sdk": "3.2.0",
