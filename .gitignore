@@ -12,3 +12,4 @@ src/**/*.js.map
 environment.dev.ts
 environment.prod.ts
 yarn.lock
+git-push-heroku.sh
