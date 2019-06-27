@@ -7,13 +7,12 @@ const path = require('path');
 const app = express();
 
 // setting static files
-app.use(express.static(__dirname, '/dist'));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // setting default router for static files
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
-
 
 // starting the server
 const port = process.env.PORT || 8080;
