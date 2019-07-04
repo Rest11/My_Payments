@@ -50,11 +50,12 @@ export namespace Card {
     }
 }
 
-export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
-
 export namespace PaymentSubscriptionStatus {
     export const ACTIVE = 'active';
     export const PAST_DUE = 'past_due';
     export const CANCELED = 'canceled';
     export const UNPAID = 'unpaid';
 }
+
+export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
+export const ID_NAVBAR_TOGGLE = 'navbarToggle';

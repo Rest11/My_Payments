@@ -1,10 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from "rxjs/Observable";
 import { filter, map, pluck } from "rxjs/operators";
 import { CssClasses } from '../../enums/css-classes.enum';
 import { AppAuthService } from "../../services/app-auth.service";
 import { RoutingContract } from "../../contracts/routing.contract";
+import { ID_NAVBAR_TOGGLE } from "../../app.constants";
 
 @Component({
     selector: 'app-navbar',
@@ -12,13 +13,13 @@ import { RoutingContract } from "../../contracts/routing.contract";
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
-    public currentAvatarLink: Observable<string>;
-    public readonly RoutingContract: typeof RoutingContract = RoutingContract;
+    public readonly routingContract: typeof RoutingContract = RoutingContract;
+    public readonly idNavbarToggle: typeof ID_NAVBAR_TOGGLE = ID_NAVBAR_TOGGLE;
 
-    @ViewChild('navbarToggler')
-    private navbarToggler: ElementRef;
+    public currentAvatarLink: Observable<string>;
 
     private body: HTMLElement;
+    private navbarToggle: HTMLElement;
     private isSidebarVisible: boolean = false;
 
     constructor (
@@ -42,29 +43,24 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
     public ngAfterViewInit (): void {
         this.body = document.body;
+        this.navbarToggle = document.getElementById(this.idNavbarToggle);
     }
 
     private openSidebar (): void {
-
-        // this.renderer.addClass(this.body, CssClasses.NAV_OPEN);
-        // this.renderer.addClass(this.navbarToggler.nativeElement, CssClasses.TOGGLED);
+        this.renderer.addClass(this.body, CssClasses.NAV_OPEN);
+        this.renderer.addClass(this.navbarToggle, CssClasses.TOGGLED);
         this.isSidebarVisible = true;
     }
 
     private closeSidebar () {
-        /**
-         * TODO: investigate: one of these caused random error to appear
-         * TypeError: Cannot read property 'classList' of undefined at EmulatedEncapsulationDomRenderer2.DefaultDomRenderer2.removeClass
-         */
-
-        // this.renderer.removeClass(this.body, CssClasses.NAV_OPEN);
-        // this.renderer.removeClass(this.navbarToggler.nativeElement, CssClasses.TOGGLED);
+        this.renderer.removeClass(this.body, CssClasses.NAV_OPEN);
+        this.renderer.removeClass(this.navbarToggle, CssClasses.TOGGLED);
 
         this.isSidebarVisible = false;
     }
 
     public toggleSidebar (): void {
-        (this.isSidebarVisible)
+        this.isSidebarVisible
             ? this.closeSidebar()
             : this.openSidebar();
     }
